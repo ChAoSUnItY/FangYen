@@ -9,7 +9,9 @@ fn main() {
 	lex := go lexer.lex(lines)
 	tokens := lex.wait()
 
-	println(tokens[0])
+	for token in tokens {
+		println(token)
+	}
 
 	rlock lexer {
 		println(lexer.reports)

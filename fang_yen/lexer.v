@@ -24,25 +24,40 @@ enum TokenType {
 	@dump
 }
 
+const keywords = {
+	'輸出': TokenType.@dump
+	'推':    .push
+}
+
 pub fn (shared l Lexer) lex(source []string) []Token {
 	mut tokens := []Token{cap: 100}
 
 	for i in 0 .. source.len {
 		runes := source[i].runes()
 
-		for j in 0 .. runes.len {
+		for j := 0; j < runes.len; j++ {
 			if is_space(runes[j]) {
 				continue
 			}
 
-			match runes[j] {
-				`推` {
-					tokens << Token{.push, utf8.raw_index(source[i], j), Pos{i + 1, j + 1}}
+			// multiple word keywords
+			mut mapped := false
+			for k, v in fang_yen.keywords {
+				result, len := word(k, runes, j)
+
+				if result {
+					mapped = true
+					j += len - 1
+					tokens << Token{v, k, Pos{i + 1, j + 1}}
+					break
 				}
-				else {
-					lock l {
-						l.reports << Report{'未知字元 `${runes[j]}`', Pos{i + 1, j + 1}}
-					}
+			}
+
+			if mapped {
+				continue
+			} else {
+				lock l {
+					l.reports << Report{'未知字元 `${runes[j]}`', Pos{i + 1, j + 1}}
 				}
 			}
 		}
@@ -51,9 +66,14 @@ pub fn (shared l Lexer) lex(source []string) []Token {
 	return tokens
 }
 
-// returns
-fn match(match_word string, runes []rune, start int) (bool, int) {
+fn word(match_word string, runes []rune, start int) (bool, int) {
+	len := utf8.len(match_word)
 
+	if runes.len - start - 1 < len {
+		return false, len
+	}
+
+	return match_word == runes[start..start + len].string(), len
 }
 
 fn is_space(r rune) bool {

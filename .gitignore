@@ -6,4 +6,7 @@ FangYen
 *.so
 *.dylib
 *.dll
+*.swo
+*.swp
+.editorconfig
 vls.log

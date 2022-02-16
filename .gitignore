@@ -10,5 +10,5 @@ FangYen
 *.swp
 .editorconfig
 vls.log
-/examples/out/
+/examples/out/*
 !/examples/out/*.asm

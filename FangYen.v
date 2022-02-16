@@ -1,6 +1,6 @@
 module main
 
-import fang_yen { new_lexer }
+import fang_yen { new_emitter, new_lexer }
 import os
 
 fn main() {
@@ -16,4 +16,7 @@ fn main() {
 	rlock lexer {
 		println(lexer.reports)
 	}
+
+	mut emitter := new_emitter('examples/out/main.asm')
+	emitter.emit(tokens)
 }

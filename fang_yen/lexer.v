@@ -1,6 +1,7 @@
 module fang_yen
 
 import encoding.utf8
+import strings
 
 struct Lexer {
 pub mut:
@@ -20,13 +21,11 @@ pub:
 
 enum TokenType {
 	integer_literal
-	push
 	@dump
 }
 
 const keywords = {
-	'輸出': TokenType.@dump
-	'推':    .push
+	'傾印': TokenType.@dump
 }
 
 pub fn (shared l Lexer) lex(source []string) []Token {
@@ -37,6 +36,19 @@ pub fn (shared l Lexer) lex(source []string) []Token {
 
 		for j := 0; j < runes.len; j++ {
 			if is_space(runes[j]) {
+				continue
+			}
+
+			if is_arabic_number(runes[j]) {
+				start_pos := j + 1
+				mut builder := strings.new_builder(5)
+
+				for is_arabic_number(runes[j]) {
+					builder.write_rune(runes[j])
+					j++
+				}
+
+				tokens << Token{.integer_literal, builder.str(), Pos{i + 1, start_pos}}
 				continue
 			}
 
@@ -69,7 +81,7 @@ pub fn (shared l Lexer) lex(source []string) []Token {
 fn word(match_word string, runes []rune, start int) (bool, int) {
 	len := utf8.len(match_word)
 
-	if runes.len - start - 1 < len {
+	if runes.len - start < len {
 		return false, len
 	}
 
@@ -78,4 +90,8 @@ fn word(match_word string, runes []rune, start int) (bool, int) {
 
 fn is_space(r rune) bool {
 	return r == ` ` || r == `\t`
+}
+
+fn is_arabic_number(r rune) bool {
+	return r >= `0` && r <= `9`
 }

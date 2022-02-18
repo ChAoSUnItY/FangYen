@@ -1,12 +1,15 @@
 module fang_yen
 
 import os
-import strings
 
 struct Emitter {
 mut:
-	file   os.File
-	indent int
+	file_buf        []byte
+	constant_buf        []byte
+	code_buf             []byte
+	stored_constants map[]
+	constant_counter int
+	file             os.File
 }
 
 pub fn new_emitter(file_path string) Emitter {
@@ -15,43 +18,22 @@ pub fn new_emitter(file_path string) Emitter {
 	if !os.exists(path) {
 		os.mkdir(path) or { panic(err) }
 	}
-	return Emitter{os.open_file(file_path, 'w') or { panic(err) }, 0}
+	return Emitter{[]byte{cap: 8}, []byte{cap: 8}, []byte{cap: 8}, os.open_file(file_path,
+		'w') or { panic(err) }}
 }
 
-// TODO: Change tokens into Stmts or Exprs
 pub fn (mut e Emitter) emit(tokens []Token) {
 	e.preinit()
 
 	for i, t in tokens {
+		println(t)
+
 		match t.token_type {
 			.integer_literal {}
-			.push {}
 			.@dump {}
 		}
 	}
 }
 
 fn (mut e Emitter) preinit() {
-	e.writeln('segment .text')
-	e.writeln('global _start')
-	e.writeln('_start:')
-	e.indent++
-	e.writeln('mov rax, 60')
-	e.writeln('mov rdi, 0')
-	e.writeln('syscall')
-	e.indent--
-}
-
-fn (mut e Emitter) writeln(s string) {
-	e.emit_indent()
-	e.file.writeln(s) or { panic(err) }
-}
-
-fn (mut e Emitter) write(s string) {
-	e.emit_indent()
-	e.file.write_string(s) or { panic(err) }
-}
-
-fn (mut e Emitter) emit_indent() {
-	e.file.write_string(strings.repeat_string('    ', e.indent)) or { panic(err) }
 }

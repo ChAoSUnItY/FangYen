@@ -9,6 +9,7 @@ FangYen
 *.swo
 *.swp
 .editorconfig
+.vscode
 vls.log
 /examples/out/*
 !/examples/out/*.asm

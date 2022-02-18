@@ -14,6 +14,6 @@ fn main() {
 		println(lexer.reports)
 	}
 
-	mut emitter := new_emitter('examples/out/main.asm')
+	mut emitter := new_emitter('examples/out/main.hvmc')
 	emitter.emit(tokens)
 }

@@ -1,0 +1,3 @@
+[submodule "HieroglyphVM"]
+	path = HieroglyphVM
+	url = https://github.com/ChAoSUnItY/HieroglyphVM.git

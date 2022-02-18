@@ -1,6 +1,7 @@
 module main
 
 import fang_yen { new_emitter, new_lexer }
+import fang_yen.c
 import os
 
 fn main() {
@@ -8,10 +9,6 @@ fn main() {
 	shared lexer := new_lexer()
 	lex := go lexer.lex(lines)
 	tokens := lex.wait()
-
-	for token in tokens {
-		println(token)
-	}
 
 	rlock lexer {
 		println(lexer.reports)

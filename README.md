@@ -2,8 +2,8 @@
 
 ##
 
-> Concatenative programming language but written in Mandarin?!?! PogChamp <br/>
-> 串接程式語言但是用中文撰寫？！？！ 太神啦
+> Concatenative stack-oriented programming language but written in Mandarin?!?! PogChamp <br/>
+> 串接堆疊導向程式語言但是用中文撰寫？！？！ 太神啦
 
 <p align="center">
 

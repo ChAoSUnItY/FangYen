@@ -21,15 +21,13 @@ pub fn new_emitter(file_path string) Emitter {
 		'w') or { panic(err) }}
 }
 
-pub fn (mut e Emitter) emit(tokens []Token) {
+pub fn (mut e Emitter) emit(tokens []Token) []byte {
 	e.preinit()
 
-	for i, t in tokens {
-		println(t)
-
+	for t in tokens {
 		match t.token_type {
 			.integer_literal {
-				integer, zb := t.literal.int(), 0x30
+				integer := t.literal.int()
 
 				e.constant_buf << [
 					byte(0x00),
@@ -41,8 +39,6 @@ pub fn (mut e Emitter) emit(tokens []Token) {
 
 				e.code_buf << [byte(C.OP_CONST), byte(e.constant_counter)]
 				e.constant_counter++
-
-				dump((int(e.constant_buf[1]) << 0) + (int(e.constant_buf[2]) << 8) + (int(e.constant_buf[3]) << 16) + (int(e.constant_buf[4]) << 24))
 			}
 			.@dump {
 				e.code_buf << [byte(C.OP_DUMP)]
@@ -57,6 +53,8 @@ pub fn (mut e Emitter) emit(tokens []Token) {
 	e.file_buf << e.code_buf
 
 	e.file.write(e.file_buf) or { println(err) }
+
+	return e.file_buf
 }
 
 fn (mut e Emitter) preinit() {

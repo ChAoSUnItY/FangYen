@@ -28,7 +28,7 @@ const keywords = {
 	'傾印': TokenType.@dump
 }
 
-pub fn (shared l Lexer) lex(source []string) []Token {
+pub fn (mut l Lexer) lex(source []string) []Token {
 	mut tokens := []Token{cap: 100}
 
 	for i in 0 .. source.len {
@@ -68,9 +68,7 @@ pub fn (shared l Lexer) lex(source []string) []Token {
 			if mapped {
 				continue
 			} else {
-				lock l {
-					l.reports << Report{'未知字元 `${runes[j]}`', Pos{i + 1, j + 1}}
-				}
+				l.reports << Report{'未知字元 `${runes[j]}`', Pos{i + 1, j + 1}}
 			}
 		}
 	}

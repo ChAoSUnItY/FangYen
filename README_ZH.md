@@ -24,6 +24,18 @@
 
 方言是一門串接程式語言，他受[Porth 程式語言](https://gitlab.com/tsoding/porth) 以及 [Forth 程式語言](https://zh.wikipedia.org/wiki/Forth) 啟發。 目前需要[象形虛擬機](https://github.com/ChAoSUnItY/HieroglyphVM)來運行。
 
+<h3> 從原始碼建置 </h3>
+
+```cmd
+$ git clone https://github.com/ChAoSUnItY/FangYen.git
+$ git submodule update --init --recursive   # 更新象形虛擬機
+$ v up                                      # 更新V語言至最新版本（可選，但高度建議）
+$ v --prod ./FangYen.v                      # 編譯方言編譯器
+$ ./FangYen <原始碼檔案路徑>                # 編譯方言程式碼並執行
+```
+
+> 註解: 位元組碼可以在 ~/.hvm/cache 內找到
+
 <h2> 入門 </h2>
 <h3> 簡述 </h3>
 

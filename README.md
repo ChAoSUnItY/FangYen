@@ -62,6 +62,9 @@ Currently Fang Yen has the following primitive types:
 是 // Stands for true
 非 // Stands for false
 ```
+
+Declare a primitive value will result in pushing value onto stack.
+
 <h3> Output </h3>
 
 To dump a value from stack (dump: pop and print), use `傾印` keyword.

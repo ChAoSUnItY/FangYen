@@ -58,5 +58,5 @@ pub fn (mut e Emitter) emit(tokens []Token) []byte {
 }
 
 fn (mut e Emitter) preinit() {
-	e.file_buf << [byte(0x43), byte(0x41), byte(0x53), byte(0x43)]
+	e.file_buf << [byte(0x43), byte(0x41), byte(0x53), byte(0x43), byte(C.V1_0), byte(C.V1_0 >> 8)]
 }

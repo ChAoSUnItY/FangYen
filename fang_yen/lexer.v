@@ -29,6 +29,9 @@ enum TokenType {
 	mul
 	div
 	rem
+	l_not // logical NOT
+	l_or // logical OR
+	l_and // logical AND
 }
 
 const keywords = {
@@ -40,6 +43,9 @@ const keywords = {
 	'乘':    .mul
 	'除':    .div
 	'餘':    .rem
+	'反相': .l_not
+	'或':    .l_or
+	'且':    .l_and
 }
 
 pub fn (mut l Lexer) lex(source []string) []Token {

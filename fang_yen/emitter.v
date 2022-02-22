@@ -71,6 +71,15 @@ pub fn (mut e Emitter) emit(tokens []Token) []byte {
 			.rem {
 				e.code_buf << [byte(C.OP_REM)]
 			}
+			.l_not {
+				e.code_buf << [byte(C.OP_L_NOT)]
+			}
+			.l_or {
+				e.code_buf << [byte(C.OP_L_OR)]
+			}
+			.l_and {
+				e.code_buf << [byte(C.OP_L_AND)]
+			}
 		}
 	}
 

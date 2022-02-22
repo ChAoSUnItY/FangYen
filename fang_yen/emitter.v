@@ -40,6 +40,12 @@ pub fn (mut e Emitter) emit(tokens []Token) []byte {
 				e.code_buf << [byte(C.OP_CONST), byte(e.constant_counter)]
 				e.constant_counter++
 			}
+			.true_literal {
+				e.code_buf << [byte(C.OP_CONST_1)]
+			}
+			.false_literal {
+				e.code_buf << [byte(C.OP_CONST_0)]
+			}
 			.@dump {
 				e.code_buf << [byte(C.OP_DUMP)]
 			}

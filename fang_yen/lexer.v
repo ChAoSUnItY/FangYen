@@ -21,6 +21,8 @@ pub:
 
 enum TokenType {
 	integer_literal
+	true_literal
+	false_literal
 	@dump
 	add
 	sub
@@ -30,7 +32,9 @@ enum TokenType {
 }
 
 const keywords = {
-	'傾印': TokenType.@dump
+	'真':    TokenType.true_literal
+	'假':    .false_literal
+	'傾印': .@dump
 	'加':    .add
 	'減':    .sub
 	'乘':    .mul

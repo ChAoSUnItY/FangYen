@@ -22,10 +22,20 @@ pub:
 enum TokenType {
 	integer_literal
 	@dump
+	add
+	sub
+	mul
+	div
+	rem
 }
 
 const keywords = {
 	'傾印': TokenType.@dump
+	'加':    .add
+	'減':    .sub
+	'乘':    .mul
+	'除':    .div
+	'餘':    .rem
 }
 
 pub fn (mut l Lexer) lex(source []string) []Token {

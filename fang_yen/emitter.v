@@ -43,6 +43,21 @@ pub fn (mut e Emitter) emit(tokens []Token) []byte {
 			.@dump {
 				e.code_buf << [byte(C.OP_DUMP)]
 			}
+			.add {
+				e.code_buf << [byte(C.OP_ADD)]
+			}
+			.sub {
+				e.code_buf << [byte(C.OP_SUB)]
+			}
+			.mul {
+				e.code_buf << [byte(C.OP_MUL)]
+			}
+			.div {
+				e.code_buf << [byte(C.OP_DIV)]
+			}
+			.rem {
+				e.code_buf << [byte(C.OP_REM)]
+			}
 		}
 	}
 

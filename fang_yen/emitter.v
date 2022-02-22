@@ -24,7 +24,14 @@ pub fn new_emitter(file_path string) Emitter {
 pub fn (mut e Emitter) emit(tokens []Token) []byte {
 	e.preinit()
 
+	mut line := 0
 	for t in tokens {
+		if t.pos.line > line {
+			line = t.pos.line
+			e.code_buf << [byte(C.ATTR_LINE), byte(line), byte(line >> 8)]
+			// TODO: Support up to 2^32 - 1 line numbers
+		}
+
 		match t.token_type {
 			.integer_literal {
 				integer := t.literal.int()

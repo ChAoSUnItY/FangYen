@@ -6,6 +6,6 @@ struct Report {
 }
 
 struct Pos {
-	line_number int
-	pos         int
+	line int
+	pos  int
 }

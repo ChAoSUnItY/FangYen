@@ -29,23 +29,35 @@ enum TokenType {
 	mul
 	div
 	rem
-	l_not // logical NOT
-	l_or // logical OR
-	l_and // logical AND
+	l_not
+	l_or
+	l_and
+	eq
+	nq
+	gt
+	ge
+	lt
+	le
 }
 
 const keywords = {
-	'真':    TokenType.true_literal
-	'假':    .false_literal
-	'傾印': .@dump
-	'加':    .add
-	'減':    .sub
-	'乘':    .mul
-	'除':    .div
-	'餘':    .rem
-	'反相': .l_not
-	'或':    .l_or
-	'且':    .l_and
+	'真':       TokenType.true_literal
+	'假':       .false_literal
+	'傾印':    .@dump
+	'加':       .add
+	'減':       .sub
+	'乘':       .mul
+	'除':       .div
+	'餘':       .rem
+	'反相':    .l_not
+	'或':       .l_or
+	'且':       .l_and
+	'等於':    .eq
+	'不等於': .nq
+	'大於':    .gt
+	'大等於': .ge
+	'小於':    .lt
+	'小等於': .le
 }
 
 pub fn (mut l Lexer) lex(source []string) []Token {

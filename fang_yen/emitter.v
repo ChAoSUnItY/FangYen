@@ -80,6 +80,24 @@ pub fn (mut e Emitter) emit(tokens []Token) []byte {
 			.l_and {
 				e.code_buf << [byte(C.OP_L_AND)]
 			}
+			.eq {
+				e.code_buf << [byte(C.OP_EQ)]
+			}
+			.nq {
+				e.code_buf << [byte(C.OP_NQ)]
+			}
+			.gt {
+				e.code_buf << [byte(C.OP_GT)]
+			}
+			.ge {
+				e.code_buf << [byte(C.OP_GE)]
+			}
+			.lt {
+				e.code_buf << [byte(C.OP_LT)]
+			}
+			.le {
+				e.code_buf << [byte(C.OP_LE)]
+			}
 		}
 	}
 

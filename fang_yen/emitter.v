@@ -53,9 +53,13 @@ pub fn (mut e Emitter) emit(tokens []Token) []byte {
 			.false_literal {
 				e.code_buf << [byte(C.OP_CONST_0)]
 			}
+			.nil_literal {
+				e.code_buf << [byte(C.OP_CONST_NIL)]
+			}
 			.@dump {
 				e.code_buf << [byte(C.OP_DUMP)]
 			}
+			.neg {}
 			.add {
 				e.code_buf << [byte(C.OP_ADD)]
 			}
@@ -71,39 +75,32 @@ pub fn (mut e Emitter) emit(tokens []Token) []byte {
 			.rem {
 				e.code_buf << [byte(C.OP_REM)]
 			}
-			.l_not {
-				e.code_buf << [byte(C.OP_L_NOT)]
-			}
-			.l_or {
-				e.code_buf << [byte(C.OP_L_OR)]
-			}
-			.l_and {
-				e.code_buf << [byte(C.OP_L_AND)]
-			}
+			.@or {}
+			.and {}
 			.eq {
-				e.code_buf << [byte(C.OP_EQ)]
+				e.emit_comparison(C.OP_IFEQ)
 			}
 			.nq {
-				e.code_buf << [byte(C.OP_NQ)]
+				e.emit_comparison(C.OP_IFNE)
 			}
 			.gt {
-				e.code_buf << [byte(C.OP_GT)]
+				e.emit_comparison(C.OP_IFGT)
 			}
 			.ge {
-				e.code_buf << [byte(C.OP_GE)]
+				e.emit_comparison(C.OP_IFGE)
 			}
 			.lt {
-				e.code_buf << [byte(C.OP_LT)]
+				e.emit_comparison(C.OP_IFLT)
 			}
 			.le {
-				e.code_buf << [byte(C.OP_LE)]
+				e.emit_comparison(C.OP_IFLE)
 			}
 		}
 	}
 
 	e.code_buf << [byte(C.OP_RETURN)]
 
-	e.file_buf << [byte(e.constant_counter << 0), byte(e.constant_counter << 8)]
+	e.file_buf << [byte(e.constant_counter), byte(e.constant_counter << 8)]
 	e.file_buf << e.constant_buf
 	e.file_buf << e.code_buf
 
@@ -114,4 +111,14 @@ pub fn (mut e Emitter) emit(tokens []Token) []byte {
 
 fn (mut e Emitter) preinit() {
 	e.file_buf << [byte(0x43), byte(0x41), byte(0x53), byte(0x43), byte(C.V1_0), byte(C.V1_0 >> 8)]
+}
+
+fn (mut e Emitter) current_byte_offset() u16 {
+	return u16(e.code_buf.len - 1)
+}
+
+fn (mut e Emitter) emit_comparison(opcode int) {
+	byte_offset := e.current_byte_offset() + 8
+	e.code_buf << [byte(opcode), byte(byte_offset), byte(byte_offset << 8), byte(C.OP_CONST_1),
+		byte(C.OP_GOTO), byte((byte_offset + 1)), byte((byte_offset + 1) << 8), byte(C.OP_CONST_0)]
 }

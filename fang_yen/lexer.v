@@ -23,15 +23,16 @@ enum TokenType {
 	integer_literal
 	true_literal
 	false_literal
+	nil_literal
 	@dump
+	neg
 	add
 	sub
 	mul
 	div
 	rem
-	l_not
-	l_or
-	l_and
+	@or
+	and
 	eq
 	nq
 	gt
@@ -43,15 +44,16 @@ enum TokenType {
 const keywords = {
 	'真':       TokenType.true_literal
 	'假':       .false_literal
+	'空指標': .nil_literal
 	'傾印':    .@dump
 	'加':       .add
 	'減':       .sub
 	'乘':       .mul
 	'除':       .div
 	'餘':       .rem
-	'反相':    .l_not
-	'或':       .l_or
-	'且':       .l_and
+	'反相':    .neg
+	'或':       .@or
+	'且':       .and
 	'等於':    .eq
 	'不等於': .nq
 	'大於':    .gt

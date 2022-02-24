@@ -53,14 +53,20 @@ That's it, no redundant operation is allowed.
 
 Currently Fang Yen has the following primitive types:
 
-- Integer
+- Integer  
 ```c
 1234
 ```
-- Boolean
+- Boolean  
+Note that boolean is also considered as a numeric type.
 ```c
 是 // Stands for true
 非 // Stands for false
+```
+- Nil
+Note that nil is also considered as a numeric type.
+```c
+空指標 // Stands for `NULL` in C
 ```
 
 Declare a primitive value will result in pushing value onto stack.
@@ -73,4 +79,31 @@ To dump a value from stack (dump: pop and print), use `傾印` keyword.
 ```c
 123 傾印 // this will print out 123
 ```
+
+<h3> Arithmetic </h3>
+
+Note that it would lead to undefined behavior if dividing or modding with `false` or `nil`.
+
+| Operator | Fang Yen Keyword | Appliable types |
+|:--------:|:----------------:|:---------------:|
+| + | 加 | `integer`, `boolean`, `nil` |
+| - | 減 | `integer`, `boolean`, `nil` |
+| * | 乘 | `integer`, `boolean`, `nil` |
+| / | 除 | `integer`, `boolean` (`true` only) |
+| % | 餘 | `integer`, `boolean` (`true` only) |
+
+<h3> Comparison </h3>
+
+Besides the basic comparison operations, `boolean` and `nil` are also comparable since they both stored as byte.
+
+| Operator | Fang Yen Keyword | Appliable types |
+|:--------:|:----------------:|:---------------:|
+| == | 等於 | `All types` |
+| != | 不等於 | `All types` |
+| > | 大於 | `integer`, `boolean`, `nil` |
+| >= | 大等於 | `integer`, `boolean`, `nil` |
+| < | 小於 | `integer`, `boolean`, `nil` |
+| <= | 小等於 | `integer`, `boolean`, `nil` |
+
+
 

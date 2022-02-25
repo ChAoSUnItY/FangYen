@@ -119,6 +119,6 @@ fn (mut e Emitter) current_byte_offset() u16 {
 
 fn (mut e Emitter) emit_comparison(opcode int) {
 	byte_offset := e.current_byte_offset() + 8
-	e.code_buf << [byte(opcode), byte(byte_offset), byte(byte_offset << 8), byte(C.OP_CONST_1),
-		byte(C.OP_GOTO), byte((byte_offset + 1)), byte((byte_offset + 1) << 8), byte(C.OP_CONST_0)]
+	e.code_buf << [byte(opcode), byte(byte_offset), byte(byte_offset << 8), byte(C.OP_CONST_0),
+		byte(C.OP_GOTO), byte((byte_offset + 1)), byte((byte_offset + 1) << 8), byte(C.OP_CONST_1)]
 }
